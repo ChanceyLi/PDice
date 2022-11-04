@@ -15,6 +15,7 @@ struct Dice_Context {
 class Dice {
 private:
     std::unordered_map<std::string, Dice_Context*> dices;
+    std::vector<std::string> id2name;
     uint32_t current_sum;
     uint16_t gen_id;
     std::vector<uint16_t> vec;
@@ -24,5 +25,6 @@ public:
     Dice_Context* find(std::string name);
     int pop(std::string name);
     void print();
+    std::string select();
 };
 #endif

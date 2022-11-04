@@ -1,5 +1,7 @@
 #include "dice.h"
 #include <iomanip>
+#include <cstdlib>
+#include <ctime>
 
 Dice_Context* Dice:: push(std::string name, uint32_t possible) {
     if (this->find(name)) {
@@ -8,8 +10,8 @@ Dice_Context* Dice:: push(std::string name, uint32_t possible) {
     }
     Dice_Context* dice_context = new Dice_Context(name, possible);
     this->dices[name] = dice_context;
-    this->gen_id++;
     dice_context->id = gen_id;
+    id2name.push_back(name);
     dice_context->index = current_sum;
     uint32_t size = this->vec.size();
     if (current_sum + possible < size) {
@@ -25,6 +27,7 @@ Dice_Context* Dice:: push(std::string name, uint32_t possible) {
         }
     }
     this->current_sum += possible;
+    this->gen_id++;
     return dice_context;
 }
 
@@ -59,4 +62,10 @@ void Dice:: print() {
         uint32_t& pos = it -> second -> possible;
         std:: cout << "\tItem: " << str << ", possibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
     }
+}
+
+std::string Dice:: select() {
+    std::srand((int)std::time(0));
+    uint32_t get = std:: rand() % this->current_sum;
+    return this->id2name[vec[get]];
 }
