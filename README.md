@@ -16,10 +16,14 @@ Get Started:
 Now, you can use it!
 
 Usage:
+
   ./PDice [options]
 
 Options:
-  -v|--version  = The version about PDice
-  -h|--help     = The help file about PDice
-  -s|--start    = The entrence of the PDice
+
+    -v|--version  = The version about PDice
+  
+    -h|--help     = The help file about PDice
+  
+    -s|--start    = The entrence of the PDice
   
