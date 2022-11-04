@@ -1,0 +1,3 @@
+/home/changjiuli/toys/build/CMakeFiles/rebuild_cache.dir
+/home/changjiuli/toys/build/CMakeFiles/edit_cache.dir
+/home/changjiuli/toys/build/CMakeFiles/PDice.dir
