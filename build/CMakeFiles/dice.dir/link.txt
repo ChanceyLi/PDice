@@ -1,2 +1,0 @@
-/usr/bin/ar qc libdice.a CMakeFiles/dice.dir/dice.cpp.o
-/usr/bin/ranlib libdice.a

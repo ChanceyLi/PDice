@@ -1,6 +1,7 @@
 CMakeFiles/PDice.dir/main.cpp.o: \
- /home/changjiuli/toys/posb_dices/main.cpp /usr/include/stdc-predef.h \
- /usr/include/c++/7/vector /usr/include/c++/7/bits/stl_algobase.h \
+ /home/changjiuli/toys/PDice/posb_dices/main.cpp \
+ /usr/include/stdc-predef.h /usr/include/c++/7/vector \
+ /usr/include/c++/7/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/7/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/7/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \
@@ -106,12 +107,12 @@ CMakeFiles/PDice.dir/main.cpp.o: \
  /usr/include/c++/7/bits/basic_ios.tcc \
  /usr/include/c++/7/bits/ostream.tcc /usr/include/c++/7/istream \
  /usr/include/c++/7/bits/istream.tcc \
- /home/changjiuli/toys/posb_dices/dice.h /usr/include/c++/7/unordered_map \
- /usr/include/c++/7/utility /usr/include/c++/7/bits/stl_relops.h \
- /usr/include/c++/7/tuple /usr/include/c++/7/array \
- /usr/include/c++/7/bits/uses_allocator.h \
+ /home/changjiuli/toys/PDice/posb_dices/dice.h \
+ /usr/include/c++/7/unordered_map /usr/include/c++/7/utility \
+ /usr/include/c++/7/bits/stl_relops.h /usr/include/c++/7/tuple \
+ /usr/include/c++/7/array /usr/include/c++/7/bits/uses_allocator.h \
  /usr/include/c++/7/bits/invoke.h /usr/include/c++/7/ext/aligned_buffer.h \
  /usr/include/c++/7/bits/hashtable.h \
  /usr/include/c++/7/bits/hashtable_policy.h \
  /usr/include/c++/7/bits/unordered_map.h \
- /home/changjiuli/toys/build/PDiceConfig.h
+ /home/changjiuli/toys/PDice/build/PDiceConfig.h

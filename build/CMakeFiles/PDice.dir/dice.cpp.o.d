@@ -1,7 +1,7 @@
 CMakeFiles/PDice.dir/dice.cpp.o: \
- /home/changjiuli/toys/posb_dices/dice.cpp /usr/include/stdc-predef.h \
- /home/changjiuli/toys/posb_dices/dice.h /usr/include/c++/7/unordered_map \
- /usr/include/c++/7/utility \
+ /home/changjiuli/toys/PDice/posb_dices/dice.cpp \
+ /usr/include/stdc-predef.h /home/changjiuli/toys/PDice/posb_dices/dice.h \
+ /usr/include/c++/7/unordered_map /usr/include/c++/7/utility \
  /usr/include/x86_64-linux-gnu/c++/7/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/7/bits/os_defines.h \
  /usr/include/features.h /usr/include/x86_64-linux-gnu/sys/cdefs.h \

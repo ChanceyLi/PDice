@@ -54,10 +54,10 @@ RM = /usr/local/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/changjiuli/toys/posb_dices
+CMAKE_SOURCE_DIR = /home/changjiuli/toys/PDice/posb_dices
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/changjiuli/toys/build
+CMAKE_BINARY_DIR = /home/changjiuli/toys/PDice/build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -81,14 +81,14 @@ clean: CMakeFiles/PDice.dir/clean
 CMakeFiles/PDice.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PDice.dir/build.make CMakeFiles/PDice.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/PDice.dir/build.make CMakeFiles/PDice.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/changjiuli/toys/build/CMakeFiles --progress-num=1,2,3 "Built target PDice"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/changjiuli/toys/PDice/build/CMakeFiles --progress-num=1,2,3 "Built target PDice"
 .PHONY : CMakeFiles/PDice.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/PDice.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/changjiuli/toys/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/changjiuli/toys/PDice/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/PDice.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/changjiuli/toys/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/changjiuli/toys/PDice/build/CMakeFiles 0
 .PHONY : CMakeFiles/PDice.dir/rule
 
 # Convenience name for target.

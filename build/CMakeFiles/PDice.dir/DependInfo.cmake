@@ -8,8 +8,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/changjiuli/toys/posb_dices/dice.cpp" "CMakeFiles/PDice.dir/dice.cpp.o" "gcc" "CMakeFiles/PDice.dir/dice.cpp.o.d"
-  "/home/changjiuli/toys/posb_dices/main.cpp" "CMakeFiles/PDice.dir/main.cpp.o" "gcc" "CMakeFiles/PDice.dir/main.cpp.o.d"
+  "/home/changjiuli/toys/PDice/posb_dices/dice.cpp" "CMakeFiles/PDice.dir/dice.cpp.o" "gcc" "CMakeFiles/PDice.dir/dice.cpp.o.d"
+  "/home/changjiuli/toys/PDice/posb_dices/main.cpp" "CMakeFiles/PDice.dir/main.cpp.o" "gcc" "CMakeFiles/PDice.dir/main.cpp.o.d"
   )
 
 # Targets to which this target links.
