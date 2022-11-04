@@ -6,11 +6,14 @@ Get Started:
   
   run code: 
     `git clone github.com/ChanceyLi/PDice`
+
     `cd ./build`
+
     `cmake ../posb_dices`
+
     `cmake --build .`
-    
-    Now, you can use it!
+
+Now, you can use it!
 
 Usage:
   ./PDice [options]
