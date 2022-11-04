@@ -50,7 +50,7 @@ void read_orders() {
 
     std:: string str;
     Dice* pdice = new Dice();
-    std::unordered_map<std::string, int> order2int{{"add", 0}, {"delte", 1}, {"print", 2}, {"select", 3}, {"exit", 4}};
+    std::unordered_map<std::string, int> order2int{{"add", 0}, {"delete", 1}, {"print", 2}, {"select", 3}, {"exit", 4}};
 
     while(std::getline(std::cin, str)) {
         std::vector<std::string> splited = str_split(str);
