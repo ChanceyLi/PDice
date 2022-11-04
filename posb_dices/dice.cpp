@@ -65,6 +65,9 @@ void Dice:: print() {
 }
 
 std::string Dice:: select() {
+    if (current_sum == 0) {
+        return "ERROR! NO ITEMS!";
+    }
     std::srand((int)std::time(0));
     uint32_t get = std:: rand() % this->current_sum;
     return this->id2name[vec[get]];

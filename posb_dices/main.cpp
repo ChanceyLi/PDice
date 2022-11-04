@@ -20,6 +20,7 @@ void pdice_usage(){
     std:: cout << "\t\tprint \t= print current items." << std::endl;
     std:: cout << "\t\tselect \t= select one item by possibility." << std::endl;
     std:: cout << "\t\texit \t= exit." << std::endl;
+    std:: cout << "\t\thelp \t=help." << std::endl;
 }
 
 std::vector<std::string> str_split(const std:: string str) {
@@ -50,12 +51,16 @@ void read_orders() {
 
     std:: string str;
     Dice* pdice = new Dice();
-    std::unordered_map<std::string, int> order2int{{"add", 0}, {"delete", 1}, {"print", 2}, {"select", 3}, {"exit", 4}};
+    std::unordered_map<std::string, int> order2int{{"add", 0}, {"delete", 1}, {"print", 2}, {"select", 3}, {"exit", 4}, {"help", 5}};
 
     while(std::getline(std::cin, str)) {
         std::vector<std::string> splited = str_split(str);
         bool flag = false;
         if (!splited.size()) continue;
+        if (order2int.find(splited[0]) == order2int.end()) {
+            std::cout << "ERROR! Use `help` for more information." << std:: endl;
+            continue;
+        }
         switch (order2int[splited[0]]) {
             case 0:
             {
@@ -97,6 +102,16 @@ void read_orders() {
             {
                 flag = true;
                 break;
+            }
+            case 5:
+            {
+                std:: cout << "Usage -s\n" << std::endl;
+                std:: cout << "\tadd [name] [possible]\t= add item with possible." << std::endl;
+                std:: cout << "\tdelete [name]\t= delete item by name." << std::endl;
+                std:: cout << "\tprint \t= print current items." << std::endl;
+                std:: cout << "\tselect \t= select one item by possibility." << std::endl;
+                std:: cout << "\texit \t= exit." << std::endl;
+                std:: cout << "\thelp \t=help." << std::endl;
             }
             default:
                 break;
