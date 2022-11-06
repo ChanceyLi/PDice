@@ -5,7 +5,7 @@ Get Started:
   Required: CMake version 3.10+
   
   run code: 
-    `git clone github.com/ChanceyLi/PDice`
+    `git clone github.com/ChanceyLi/PDice.git`
 
     `cd ./build`
 
