@@ -22,7 +22,7 @@ struct Dice_DicTree {
 class Dice {
 private:
     std::unordered_map<std::string, Dice_Context*> dices;
-    std::vector<std::string> id2name;
+    std::vector<Dice_Context*> id2ctx;
     Dice_DicTree* dic_tree;
     uint32_t current_sum;
     int cnt;

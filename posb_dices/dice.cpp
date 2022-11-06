@@ -11,7 +11,7 @@ Dice_Context* Dice:: push(std::string name, uint32_t possible) {
     Dice_Context* dice_context = new Dice_Context(name, possible);
     this->dices[name] = dice_context;
     dice_context->id = gen_id;
-    id2name.push_back(name);
+    this->id2ctx.push_back(dice_context);
     dice_context->index = current_sum;
     uint32_t size = this->vec.size();
     if (current_sum + possible < size) {
@@ -78,20 +78,18 @@ std::vector<Dice_Context*> Dice:: find(std::string prefix) {
 
 int Dice:: pop(std::string name) {
     char label = name[(int)name.length()-1];
+    std::vector<Dice_DicTree*> name_find;
+
     if (label != '*') {
         if (this->dices.find(name) == this->dices.end()) {
             std:: cout << "ERROR! THIS TYPE $" << name << " NOT FOUND!" << std:: endl;
             return -1;
         }
-        Dice_Context* dice = this->dices[name];
-        uint32_t& poss = dice->possible;
-        uint32_t& index = dice->index;
-
-        for (int i = index; i + poss < this->vec.size(); ++i) {
-            this->vec[i] = this->vec[i+poss];
+        Dice_DicTree* root = this->dic_tree;
+        for (int i = 0; i < name.length(); ++i) {
+            root = root -> childrens[name[i]];
         }
-        this->current_sum -= poss;
-        this->dices.erase(name);
+        name_find.push_back(root);
     } else {
         Dice_DicTree* root = this->dic_tree;
 
@@ -102,7 +100,6 @@ int Dice:: pop(std::string name) {
             }
             root = root -> childrens[name[i]];
         }
-        std::vector<Dice_DicTree*> name_find;
         std::stack<Dice_DicTree*> stk;
         stk.push(root);
         while (!stk.empty()) {
@@ -113,22 +110,27 @@ int Dice:: pop(std::string name) {
                 stk.push(it->second);
             }
         }
-        if (name_find.size() == 0) {
-            std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
-            return -1;
-        }
-        for (auto& nm : name_find) {
-            Dice_Context* dice = this->dices[nm->ctx->name];
-            uint32_t& poss = dice->possible;
-            uint32_t& index = dice->index;
-
-            for (int i = index; i + poss < this->vec.size(); ++i) {
-                this->vec[i] = this->vec[i+poss];
+    }
+    if (name_find.size() == 0) {
+        std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
+        return -1;
+    }
+    for (auto& nm : name_find) {
+        Dice_Context* ctx = nm->ctx;
+        uint32_t& poss = ctx->possible;
+        uint32_t& index = ctx->index;
+        int curr_index = -1;
+        for (int i = index; i + poss < this->current_sum; ++i) {
+            this->vec[i] = this->vec[i+poss];
+            if (curr_index != this->vec[i]) {
+                curr_index = this->vec[i];
+                Dice_Context* tmp = this->id2ctx[curr_index];
+                tmp->index -= poss;
             }
-            this->current_sum -= poss;
-            this->dices.erase(nm->ctx->name);
-            nm->ctx = nullptr;
         }
+        this->current_sum -= poss;
+        this->dices.erase(ctx->name);
+        nm->ctx = nullptr;
     }
     return 0;
 }
@@ -142,7 +144,7 @@ void Dice:: print() {
     for (auto it = this->dices.begin(); it != this->dices.end(); ++it) {
         std::string str = it -> first;
         uint32_t& pos = it -> second -> possible;
-        std:: cout << "\tItem: " << str << ", \tpossibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
+        std:: cout << "\tItem: " << str << ", \t\tpossibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
     }
 }
 
@@ -157,7 +159,7 @@ void Dice:: print(std::string prefix) {
     } else {
         std:: cout << "Current possibilities about items with prefix: " << prefix << std:: endl;
         for (auto& it : res) {
-            std:: cout << "\tItem: " << it->name << ", \tpossibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
+            std:: cout << "\tItem: " << it->name << ", \t\tpossibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
         }
     }
 }
@@ -168,5 +170,5 @@ std::string Dice:: select() {
     }
     std::srand((int)std::time(0));
     uint32_t get = std:: rand() % this->current_sum;
-    return this->id2name[vec[get]];
+    return this->id2ctx[this->vec[get]]->name;
 }
