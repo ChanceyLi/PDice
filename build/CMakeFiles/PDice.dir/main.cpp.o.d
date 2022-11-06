@@ -114,5 +114,7 @@ CMakeFiles/PDice.dir/main.cpp.o: \
  /usr/include/c++/7/bits/invoke.h /usr/include/c++/7/ext/aligned_buffer.h \
  /usr/include/c++/7/bits/hashtable.h \
  /usr/include/c++/7/bits/hashtable_policy.h \
- /usr/include/c++/7/bits/unordered_map.h \
+ /usr/include/c++/7/bits/unordered_map.h /usr/include/c++/7/stack \
+ /usr/include/c++/7/deque /usr/include/c++/7/bits/stl_deque.h \
+ /usr/include/c++/7/bits/deque.tcc /usr/include/c++/7/bits/stl_stack.h \
  /home/changjiuli/toys/PDice/build/PDiceConfig.h

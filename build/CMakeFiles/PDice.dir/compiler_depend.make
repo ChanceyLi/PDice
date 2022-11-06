@@ -157,6 +157,11 @@ CMakeFiles/PDice.dir/dice.cpp.o: /home/changjiuli/toys/PDice/posb_dices/dice.cpp
   /usr/include/c++/7/bits/stl_vector.h \
   /usr/include/c++/7/bits/stl_bvector.h \
   /usr/include/c++/7/bits/vector.tcc \
+  /usr/include/c++/7/stack \
+  /usr/include/c++/7/deque \
+  /usr/include/c++/7/bits/stl_deque.h \
+  /usr/include/c++/7/bits/deque.tcc \
+  /usr/include/c++/7/bits/stl_stack.h \
   /usr/include/c++/7/iomanip \
   /usr/include/c++/7/locale \
   /usr/include/c++/7/bits/locale_facets_nonio.h \
@@ -331,6 +336,11 @@ CMakeFiles/PDice.dir/main.cpp.o: /home/changjiuli/toys/PDice/posb_dices/main.cpp
   /usr/include/c++/7/bits/hashtable.h \
   /usr/include/c++/7/bits/hashtable_policy.h \
   /usr/include/c++/7/bits/unordered_map.h \
+  /usr/include/c++/7/stack \
+  /usr/include/c++/7/deque \
+  /usr/include/c++/7/bits/stl_deque.h \
+  /usr/include/c++/7/bits/deque.tcc \
+  /usr/include/c++/7/bits/stl_stack.h \
   PDiceConfig.h
 
 
@@ -340,11 +350,17 @@ CMakeFiles/PDice.dir/main.cpp.o: /home/changjiuli/toys/PDice/posb_dices/main.cpp
 
 /usr/include/c++/7/ctime:
 
-/usr/include/c++/7/bits/locale_facets_nonio.h:
-
 /usr/include/c++/7/bits/sstream.tcc:
 
 /usr/include/c++/7/locale:
+
+/usr/include/c++/7/bits/locale_facets_nonio.h:
+
+/usr/include/c++/7/bits/deque.tcc:
+
+/usr/include/c++/7/bits/stl_deque.h:
+
+/usr/include/c++/7/stack:
 
 /usr/include/c++/7/bits/stl_vector.h:
 
@@ -407,6 +423,8 @@ CMakeFiles/PDice.dir/main.cpp.o: /home/changjiuli/toys/PDice/posb_dices/main.cpp
 /usr/include/c++/7/ext/aligned_buffer.h:
 
 /usr/include/x86_64-linux-gnu/bits/sigset.h:
+
+/usr/include/c++/7/bits/stl_stack.h:
 
 /usr/include/c++/7/cwctype:
 
@@ -529,6 +547,8 @@ CMakeFiles/PDice.dir/main.cpp.o: /home/changjiuli/toys/PDice/posb_dices/main.cpp
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
 
 /usr/include/x86_64-linux-gnu/c++/7/bits/messages_members.h:
+
+/usr/include/c++/7/deque:
 
 /usr/include/c++/7/bits/localefwd.h:
 
