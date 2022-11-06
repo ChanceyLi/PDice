@@ -1,5 +1,5 @@
 # PDice
-This is a tool to add/delete items for rounding.
+This is a tool to add/delete items for rand select your favorite food/resourant/shop.etc.
 
 Get Started:
   Required: CMake version 3.10+
