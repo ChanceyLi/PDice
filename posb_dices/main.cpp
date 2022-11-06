@@ -158,13 +158,13 @@ int main(int argc, char* argv[])
                 read_orders();
             }
             else {
-                std:: cout << "Use `./PDice -h` for help" << std:: endl;
+                error_message();
             }
             break;
         }
 
         default:
-            std:: cout << "ERROR! Please use: './PDice -h|--help' for more infomation." << std:: endl;
+            error_message();
             break;
     }
 
