@@ -142,7 +142,7 @@ void Dice:: print() {
     for (auto it = this->dices.begin(); it != this->dices.end(); ++it) {
         std::string str = it -> first;
         uint32_t& pos = it -> second -> possible;
-        std:: cout << "\tItem: " << str << ", possibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
+        std:: cout << "\tItem: " << str << ", \tpossibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
     }
 }
 
@@ -157,7 +157,7 @@ void Dice:: print(std::string prefix) {
     } else {
         std:: cout << "Current possibilities about items with prefix: " << prefix << std:: endl;
         for (auto& it : res) {
-            std:: cout << "\tItem: " << it->name << ", possibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
+            std:: cout << "\tItem: " << it->name << ", \tpossibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
         }
     }
 }
