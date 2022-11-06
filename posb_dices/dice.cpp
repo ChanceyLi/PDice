@@ -4,7 +4,7 @@
 #include <ctime>
 
 Dice_Context* Dice:: push(std::string name, uint32_t possible) {
-    if (this->find(name)) {
+    if (this->dices.find(name) != this->dices.end()) {
         std::cout << "ERROR! THIS TYPE $" << name << " IS ALREADY EXIST!" << std:: endl;
         return nullptr;
     }
@@ -28,34 +28,116 @@ Dice_Context* Dice:: push(std::string name, uint32_t possible) {
     }
     this->current_sum += possible;
     this->gen_id++;
+
+    Dice_DicTree* root = this->dic_tree;
+    for (int i = 0; i < name.length(); ++i) {
+        if (root -> childrens.find(name[i]) == root -> childrens.end()) {
+            root -> childrens[name[i]] = new Dice_DicTree(nullptr);
+        }
+        root = root -> childrens[name[i]];
+    }
+    root -> ctx = dice_context;
+
     return dice_context;
 }
 
-Dice_Context* Dice:: find(std::string name) {
-    if (this->dices.find(name) != this->dices.end()) {
-        return this->dices[name];
+std::vector<Dice_Context*> Dice:: find(std::string prefix) {
+    std:: string name;
+    for (int i = 0; i < prefix.length(); ++i) {
+        if ( prefix[i] != '*') name.push_back(prefix[i]);
+        else {
+            if (i + 1 == prefix.length()) break;
+            else {
+                std:: cout << "ERROR! WRONG PREFIX! please use `help` for more information." << std:: endl;
+                return {};
+            }
+        }
     }
-    return nullptr;
+
+    Dice_DicTree* root = this -> dic_tree;
+    for (int i = 0; i < name.length(); ++i) {
+        if (root->childrens.find(name[i]) == root->childrens.end()) {
+            return {};
+        }
+        root = root -> childrens[name[i]];
+    }
+    std::vector<Dice_Context*> res;
+    std::stack<Dice_DicTree*> stk;
+    stk.push(root);
+    while (!stk.empty()) {
+        Dice_DicTree* t = stk.top();
+        stk.pop();
+        if (t->ctx) res.push_back(t->ctx);
+        for (auto it = t->childrens.begin(); it != t->childrens.end(); ++it) {
+            stk.push(it->second);
+        }
+    }
+    return res;
+
 }
 
 int Dice:: pop(std::string name) {
-    if (this->find(name) == nullptr) {
-        std:: cout << "ERROR! THIS TYPE $" << name << "NOT FOUND!" << std:: endl;
-        return -1;
-    }
-    Dice_Context* dice = this->dices[name];
-    uint32_t& poss = dice->possible;
-    uint32_t& index = dice->index;
+    char label = name[(int)name.length()-1];
+    if (label != '*') {
+        if (this->dices.find(name) == this->dices.end()) {
+            std:: cout << "ERROR! THIS TYPE $" << name << " NOT FOUND!" << std:: endl;
+            return -1;
+        }
+        Dice_Context* dice = this->dices[name];
+        uint32_t& poss = dice->possible;
+        uint32_t& index = dice->index;
 
-    for (int i = index; i + poss < this->vec.size(); ++i) {
-        this->vec[i] = this->vec[i+poss];
+        for (int i = index; i + poss < this->vec.size(); ++i) {
+            this->vec[i] = this->vec[i+poss];
+        }
+        this->current_sum -= poss;
+        this->dices.erase(name);
+    } else {
+        Dice_DicTree* root = this->dic_tree;
+
+        for (int i = 0; i+1 < name.length(); ++i) {
+            if (root -> childrens.find(name[i]) == root -> childrens.end()) {
+                std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
+                return -1;
+            }
+            root = root -> childrens[name[i]];
+        }
+        std::vector<Dice_DicTree*> name_find;
+        std::stack<Dice_DicTree*> stk;
+        stk.push(root);
+        while (!stk.empty()) {
+            Dice_DicTree* t = stk.top();
+            if (t->ctx) name_find.push_back(t);
+            stk.pop();
+            for (auto it = t->childrens.begin(); it != t->childrens.end(); ++it) {
+                stk.push(it->second);
+            }
+        }
+        if (name_find.size() == 0) {
+            std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
+            return -1;
+        }
+        for (auto& nm : name_find) {
+            Dice_Context* dice = this->dices[nm->ctx->name];
+            uint32_t& poss = dice->possible;
+            uint32_t& index = dice->index;
+
+            for (int i = index; i + poss < this->vec.size(); ++i) {
+                this->vec[i] = this->vec[i+poss];
+            }
+            this->current_sum -= poss;
+            this->dices.erase(nm->ctx->name);
+            nm->ctx = nullptr;
+        }
     }
-    this->current_sum -= poss;
-    this->dices.erase(name);
     return 0;
 }
 
 void Dice:: print() {
+    if (this->current_sum == 0) {
+        std:: cout << "No items!" << std::endl;
+        return;
+    }
     std:: cout << "Current possibilities about items:" << std:: endl;
     for (auto it = this->dices.begin(); it != this->dices.end(); ++it) {
         std::string str = it -> first;
@@ -64,8 +146,24 @@ void Dice:: print() {
     }
 }
 
+void Dice:: print(std::string prefix) {
+    if (this->current_sum == 0) {
+        std:: cout << "No items!" << std::endl;
+        return;
+    }
+    std:: vector<Dice_Context*> res = this->find(prefix);
+    if (res.size() == 0) {
+        std:: cout << "ERROR! THIS PREFIX $" << prefix << " NOT FOUND!" << std:: endl;
+    } else {
+        std:: cout << "Current possibilities about items with prefix: " << prefix << std:: endl;
+        for (auto& it : res) {
+            std:: cout << "\tItem: " << it->name << ", possibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
+        }
+    }
+}
+
 std::string Dice:: select() {
-    if (current_sum == 0) {
+    if (this->current_sum == 0) {
         return "ERROR! NO ITEMS!";
     }
     std::srand((int)std::time(0));

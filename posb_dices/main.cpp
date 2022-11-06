@@ -16,8 +16,8 @@ void pdice_usage(){
     std:: cout << "\t-s|--start\t= Start to use PDice." << std:: endl;
     std:: cout << "\tUsage -s\n" << std::endl;
     std:: cout << "\t\tadd [name] [possible]\t= add item with possible." << std::endl;
-    std:: cout << "\t\tdelete [name]\t= delete item by name." << std::endl;
-    std:: cout << "\t\tprint \t= print current items." << std::endl;
+    std:: cout << "\t\tdelete [name]\t= delete item by name or prefix." << std::endl;
+    std:: cout << "\t\tprint [option]\t= print current items or items with prefix." << std::endl;
     std:: cout << "\t\tselect \t= select one item by possibility." << std::endl;
     std:: cout << "\t\texit \t= exit." << std::endl;
     std:: cout << "\t\thelp \t=help." << std::endl;
@@ -47,6 +47,11 @@ int str2int(std::string str) {
     }
     return res;
 }
+
+void error_message() {
+    std:: cout << "ERROR! please use `help` for more information" << std::endl;
+}
+
 void read_orders() {
 
     std:: string str;
@@ -58,21 +63,21 @@ void read_orders() {
         bool flag = false;
         if (!splited.size()) continue;
         if (order2int.find(splited[0]) == order2int.end()) {
-            std::cout << "ERROR! Use `help` for more information." << std:: endl;
+            error_message();
             continue;
         }
         switch (order2int[splited[0]]) {
             case 0:
             {
                 if (splited.size() < 3) {
-                    std::cout << "Usage: add [name] [possible]" << std:: endl;
-                    std::cout << "example: add fruit 100" << std:: endl;
+                    error_message();
                     break;
                 }
                 std::string& name = splited[1];
                 int poss = str2int(splited[2]);
                 if (poss == -1) {
                     std:: cout << "possible must be positive number" << std:: endl;
+                    error_message();
                     break;
                 }
                 pdice->push(name, poss);
@@ -81,8 +86,7 @@ void read_orders() {
             case 1:
             {
                 if (splited.size() < 2) {
-                    std:: cout << "Usage: delete [name]" << std:: endl;
-                    std:: cout << "example: delete fruit" << std:: endl;
+                    error_message();
                     break;
                 }
                 pdice->pop(splited[1]);
@@ -90,8 +94,18 @@ void read_orders() {
             }
             case 2:
             {
-                pdice->print();
-                break;
+                if (splited.size() == 1) {
+                    pdice->print();
+                    break;
+                }
+                else if (splited.size() == 2) {
+                    pdice->print(splited[1]);
+                    break;
+                }
+                else {
+                    error_message();
+                    break;
+                }
             }
             case 3:
             {
@@ -107,8 +121,8 @@ void read_orders() {
             {
                 std:: cout << "Usage -s\n" << std::endl;
                 std:: cout << "\tadd [name] [possible]\t= add item with possible." << std::endl;
-                std:: cout << "\tdelete [name]\t= delete item by name." << std::endl;
-                std:: cout << "\tprint \t= print current items." << std::endl;
+                std:: cout << "\tdelete [name]\t= delete item by name or prefix." << std::endl;
+                std:: cout << "\tprint [option]\t= print current items or items with prefix." << std::endl;
                 std:: cout << "\tselect \t= select one item by possibility." << std::endl;
                 std:: cout << "\texit \t= exit." << std::endl;
                 std:: cout << "\thelp \t=help." << std::endl;
