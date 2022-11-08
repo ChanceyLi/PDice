@@ -76,9 +76,40 @@ std::vector<Dice_Context*> Dice:: find(std::string prefix) {
 
 }
 
+void Dice::pop_item_in_dictree(Dice_DicTree* dic) {
+    if (dic->ctx == nullptr) return;
+    Dice_Context* ctx = dic->ctx;
+    uint32_t& poss = ctx->possible;
+    uint32_t& index = ctx->index;
+    int curr_index = -1;
+    for (int i = index; i + poss < this->current_sum; ++i) {
+        this->vec[i] = this->vec[i+poss];
+        if (curr_index != this->vec[i]) {
+            curr_index = this->vec[i];
+            Dice_Context* tmp = this->id2ctx[curr_index];
+            tmp->index -= poss;
+        }
+    }
+    this->current_sum -= poss;
+    this->dices.erase(ctx->name);
+    delete dic->ctx;
+    dic->ctx = nullptr;
+}
+
+void Dice::pop_items_backtracking(Dice_DicTree* father, const char& ch) {
+    Dice_DicTree* root = father->childrens[ch];
+    for (auto it = root->childrens.begin(); it != root->childrens.end(); ++it) {
+        std:: cout<< "key: " << it->first << ", value: " << it->second << std:: endl;
+        pop_items_backtracking(root, it->first);
+    }
+    root->childrens.erase(root->childrens.begin(), root->childrens.end());
+    pop_item_in_dictree(root);
+    delete father->childrens[ch];
+    father->childrens[ch] = nullptr;
+}
+
 int Dice:: pop(std::string name) {
     char label = name[(int)name.length()-1];
-    std::vector<Dice_DicTree*> name_find;
 
     if (label != '*') {
         if (this->dices.find(name) == this->dices.end()) {
@@ -89,49 +120,34 @@ int Dice:: pop(std::string name) {
         for (int i = 0; i < name.length(); ++i) {
             root = root -> childrens[name[i]];
         }
-        name_find.push_back(root);
+        pop_item_in_dictree(root);
     } else {
         Dice_DicTree* root = this->dic_tree;
+        Dice_DicTree* prev = nullptr;
+        char last_char;
+
+        if (name.length() == 1) {
+            for (auto it = root->childrens.begin(); it != root->childrens.end();) {
+                pop_items_backtracking(root, it->first);
+                root->childrens.erase(it);
+            }
+            return 0;
+        }
 
         for (int i = 0; i+1 < name.length(); ++i) {
             if (root -> childrens.find(name[i]) == root -> childrens.end()) {
                 std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
                 return -1;
             }
+            prev = root;
             root = root -> childrens[name[i]];
+            last_char = name[i];
         }
-        std::stack<Dice_DicTree*> stk;
-        stk.push(root);
-        while (!stk.empty()) {
-            Dice_DicTree* t = stk.top();
-            if (t->ctx) name_find.push_back(t);
-            stk.pop();
-            for (auto it = t->childrens.begin(); it != t->childrens.end(); ++it) {
-                stk.push(it->second);
-            }
-        }
+
+        pop_items_backtracking(prev, last_char);
+        prev->childrens.erase(last_char);
     }
-    if (name_find.size() == 0) {
-        std:: cout << "ERROR! THIS PREFIX $" << name << " NOT FOUND!" << std:: endl;
-        return -1;
-    }
-    for (auto& nm : name_find) {
-        Dice_Context* ctx = nm->ctx;
-        uint32_t& poss = ctx->possible;
-        uint32_t& index = ctx->index;
-        int curr_index = -1;
-        for (int i = index; i + poss < this->current_sum; ++i) {
-            this->vec[i] = this->vec[i+poss];
-            if (curr_index != this->vec[i]) {
-                curr_index = this->vec[i];
-                Dice_Context* tmp = this->id2ctx[curr_index];
-                tmp->index -= poss;
-            }
-        }
-        this->current_sum -= poss;
-        this->dices.erase(ctx->name);
-        nm->ctx = nullptr;
-    }
+
     return 0;
 }
 

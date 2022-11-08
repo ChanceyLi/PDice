@@ -33,8 +33,12 @@ public:
     Dice_Context* push(std::string name, uint32_t possible);
     std::vector<Dice_Context*> find(std::string name);
     int pop(std::string name);
+    void pop_item_in_dictree(Dice_DicTree* dic);
+    void pop_items_backtracking(Dice_DicTree* father, const char& ch);
     void print();
     void print(std::string prefix);
     std::string select();
 };
+
+
 #endif
