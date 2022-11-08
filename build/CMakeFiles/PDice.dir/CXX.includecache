@@ -1,0 +1,30 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/changjiu/PDice/posb_dices/dice.cpp
+dice.h
+/home/changjiu/PDice/posb_dices/dice.h
+iomanip
+-
+cstdlib
+-
+ctime
+-
+
+/home/changjiu/PDice/posb_dices/dice.h
+unordered_map
+-
+iostream
+-
+vector
+-
+string
+-
+stack
+-
+

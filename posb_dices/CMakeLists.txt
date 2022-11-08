@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 # set the project name
-project(PDice VERSION 1.0)
+project(PDice VERSION 1.1)
 
 option (USE_DICE "Use dice provided structrue implementation" OFF)
 
