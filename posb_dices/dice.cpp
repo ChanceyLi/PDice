@@ -41,39 +41,16 @@ Dice_Context* Dice:: push(std::string name, uint32_t possible) {
     return dice_context;
 }
 
-std::vector<Dice_Context*> Dice:: find(std::string prefix) {
-    std:: string name;
-    for (int i = 0; i < prefix.length(); ++i) {
-        if ( prefix[i] != '*') name.push_back(prefix[i]);
-        else {
-            if (i + 1 == prefix.length()) break;
-            else {
-                std:: cout << "ERROR! WRONG PREFIX! please use `help` for more information." << std:: endl;
-                return {};
-            }
-        }
+void Dice::print_items_dfs(Dice_DicTree* root) {
+    if (!root) return;
+    if (root->ctx) {
+        std::string& str = root->ctx->name;
+        uint32_t& pos = root->ctx->possible;
+        std:: cout << "\tItem: " << str << ", \t\tpossibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
     }
-
-    Dice_DicTree* root = this -> dic_tree;
-    for (int i = 0; i < name.length(); ++i) {
-        if (root->childrens.find(name[i]) == root->childrens.end()) {
-            return {};
-        }
-        root = root -> childrens[name[i]];
+    for (auto it = root->childrens.begin(); it != root->childrens.end(); ++it) {
+        print_items_dfs(it->second);
     }
-    std::vector<Dice_Context*> res;
-    std::stack<Dice_DicTree*> stk;
-    stk.push(root);
-    while (!stk.empty()) {
-        Dice_DicTree* t = stk.top();
-        stk.pop();
-        if (t->ctx) res.push_back(t->ctx);
-        for (auto it = t->childrens.begin(); it != t->childrens.end(); ++it) {
-            stk.push(it->second);
-        }
-    }
-    return res;
-
 }
 
 void Dice::pop_item_in_dictree(Dice_DicTree* dic) {
@@ -157,11 +134,7 @@ void Dice:: print() {
         return;
     }
     std:: cout << "Current possibilities about items:" << std:: endl;
-    for (auto it = this->dices.begin(); it != this->dices.end(); ++it) {
-        std::string str = it -> first;
-        uint32_t& pos = it -> second -> possible;
-        std:: cout << "\tItem: " << str << ", \t\tpossibility: " << std::setprecision(5) << (double)pos / this->current_sum << std::endl; 
-    }
+    this->print_items_dfs(this->dic_tree);
 }
 
 void Dice:: print(std::string prefix) {
@@ -169,15 +142,24 @@ void Dice:: print(std::string prefix) {
         std:: cout << "No items!" << std::endl;
         return;
     }
-    std:: vector<Dice_Context*> res = this->find(prefix);
-    if (res.size() == 0) {
-        std:: cout << "ERROR! THIS PREFIX $" << prefix << " NOT FOUND!" << std:: endl;
-    } else {
-        std:: cout << "Current possibilities about items with prefix: " << prefix << std:: endl;
-        for (auto& it : res) {
-            std:: cout << "\tItem: " << it->name << ", \t\tpossibility: " << std::setprecision(5) << (double)(it->possible) / this-> current_sum << std::endl;
+    Dice_DicTree* root = this->dic_tree;
+    for (int i = 0; i < prefix.length(); ++i) {
+        if (prefix[i] == '*' && i+1 < prefix.length()) {
+            std::cout << "ERROR! WRONG PREFIX!" << std::endl;
+            error_message();
+            return;
+        }
+        if (prefix[i] != '*') {
+            if (root->childrens.find(prefix[i]) == root->childrens.end()) {
+                std::cout << "ERROR! PREFIX NOT FOUND!" << std::endl;
+                error_message();
+                return;
+            } else {
+                root = root->childrens[prefix[i]];
+            }
         }
     }
+    print_items_dfs(root);
 }
 
 std::string Dice:: select() {
