@@ -28,3 +28,19 @@ string
 stack
 -
 
+/home/changjiu/PDice/posb_dices/main.cpp
+vector
+-
+iostream
+-
+string
+-
+dice.h
+/home/changjiu/PDice/posb_dices/dice.h
+unordered_map
+-
+PDiceConfig.h
+/home/changjiu/PDice/posb_dices/PDiceConfig.h
+
+PDiceConfig.h
+

@@ -37,8 +37,10 @@ public:
     void pop_items_backtracking(Dice_DicTree* father, const char& ch);
     void print();
     void print(std::string prefix);
+    void print_items_dfs(Dice_DicTree* root);
     std::string select();
 };
 
+void error_message();
 
 #endif
