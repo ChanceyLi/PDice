@@ -76,7 +76,7 @@ void Dice::pop_item_in_dictree(Dice_DicTree* dic) {
 void Dice::pop_items_backtracking(Dice_DicTree* father, const char& ch) {
     Dice_DicTree* root = father->childrens[ch];
     for (auto it = root->childrens.begin(); it != root->childrens.end(); ++it) {
-        std:: cout<< "key: " << it->first << ", value: " << it->second << std:: endl;
+        // std:: cout<< "key: " << it->first << ", value: " << it->second << std:: endl;
         pop_items_backtracking(root, it->first);
     }
     root->childrens.erase(root->childrens.begin(), root->childrens.end());
@@ -104,10 +104,10 @@ int Dice:: pop(std::string name) {
         char last_char;
 
         if (name.length() == 1) {
-            for (auto it = root->childrens.begin(); it != root->childrens.end();) {
+            for (auto it = root->childrens.begin(); it != root->childrens.end(); ++it) {
                 pop_items_backtracking(root, it->first);
-                root->childrens.erase(it);
             }
+            root->childrens.erase(root->childrens.begin(), root->childrens.end());
             return 0;
         }
 
