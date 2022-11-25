@@ -1,1 +1,1 @@
-/usr/bin/c++     CMakeFiles/PDice.dir/main.cpp.o CMakeFiles/PDice.dir/dice.cpp.o  -o PDice 
+/usr/bin/c++ CMakeFiles/PDice.dir/main.cpp.o CMakeFiles/PDice.dir/dice.cpp.o -o PDice 

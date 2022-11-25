@@ -1,0 +1,6 @@
+add tomato 4
+add potato 3
+add vega 2
+add simu 3
+add gigi 3
+select

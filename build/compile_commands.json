@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/changjiuli/toys/PDice/build",
+  "command": "/usr/bin/g++ -I/home/changjiuli/toys/PDice/build -g -o CMakeFiles/PDice.dir/main.cpp.o -c /home/changjiuli/toys/PDice/posb_dices/main.cpp",
+  "file": "/home/changjiuli/toys/PDice/posb_dices/main.cpp"
+},
+{
+  "directory": "/home/changjiuli/toys/PDice/build",
+  "command": "/usr/bin/g++ -I/home/changjiuli/toys/PDice/build -g -o CMakeFiles/PDice.dir/dice.cpp.o -c /home/changjiuli/toys/PDice/posb_dices/dice.cpp",
+  "file": "/home/changjiuli/toys/PDice/posb_dices/dice.cpp"
+}
+]

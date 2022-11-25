@@ -3,7 +3,7 @@
 #include <string>
 #include "dice.h"
 #include <unordered_map>
-
+#include <stdio.h>
 #include "PDiceConfig.h"
 
 void pdice_usage(){
@@ -14,6 +14,7 @@ void pdice_usage(){
     std:: cout << "\t-v|--version\t= Print the version about PDice." << std:: endl;
     std:: cout << "\t-h|--help\t= Print help about PDice." << std:: endl;
     std:: cout << "\t-s|--start\t= Start to use PDice." << std:: endl;
+    std:: cout << "\t-i|--initial [file]\t= initial PDice with [file, default:initial.txt]." << std::endl;
     std:: cout << "\tUsage -s\n" << std::endl;
     std:: cout << "\t\tadd [name] [possible]\t= add item with possible." << std::endl;
     std:: cout << "\t\tdelete [name]\t= delete item by name or prefix." << std::endl;
@@ -52,11 +53,10 @@ void error_message() {
     std:: cout << "ERROR! please use `help` for more information" << std::endl;
 }
 
-void read_orders() {
+void read_orders(Dice* pdice) {
 
     std:: string str;
-    Dice* pdice = new Dice();
-    std::unordered_map<std::string, int> order2int{{"add", 0}, {"delete", 1}, {"print", 2}, {"select", 3}, {"exit", 4}, {"help", 5}};
+    static std::unordered_map<std::string, int> order2int{{"add", 0}, {"delete", 1}, {"print", 2}, {"select", 3}, {"exit", 4}, {"help", 5}};
 
     while(std::getline(std::cin, str)) {
         std::vector<std::string> splited = str_split(str);
@@ -125,7 +125,7 @@ void read_orders() {
                 std:: cout << "\tprint [option]\t= print current items or items with prefix." << std::endl;
                 std:: cout << "\tselect \t= select one item by possibility." << std::endl;
                 std:: cout << "\texit \t= exit." << std::endl;
-                std:: cout << "\thelp \t=help." << std::endl;
+                std:: cout << "\thelp \t= help." << std::endl;
             }
             default:
                 break;
@@ -135,6 +135,7 @@ void read_orders() {
 }
 int main(int argc, char* argv[])
 {
+    Dice* pdice = new Dice();
     switch (argc) {
         case 1:
         {
@@ -154,8 +155,14 @@ int main(int argc, char* argv[])
             else if (param == "-h" || param == "--help") {
                 pdice_usage(); 
             }
+            else if (param == "-i" || param == "--initial") {
+                freopen("initial.txt", "r", stdin);
+                read_orders(pdice);
+                fclose(stdin);
+                read_orders(pdice);
+            }
             else if (param == "-s" || param == "--start") {
-                read_orders();
+                read_orders(pdice);
             }
             else {
                 error_message();
@@ -163,6 +170,21 @@ int main(int argc, char* argv[])
             break;
         }
 
+        case 3:
+        {
+            std::string param = argv[1];
+            const char* file = argv[2];
+            if (param == "-i" || param == "-initial") {
+                if (freopen(file, "r", stdin)) {
+                    read_orders(pdice);
+                    fclose(stdin);
+                    read_orders(pdice);
+                } else {
+                    error_message();
+                }
+            } else error_message();
+            break;
+        }
         default:
             error_message();
             break;
