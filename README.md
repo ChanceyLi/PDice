@@ -1,5 +1,5 @@
 # PDice
-This is a tool to add/delete items for rand select your favorite food/resourant/shop.etc.
+This is a Linux bash tool to add/delete items for rand select your favorite food/resourant/shop.etc.
 
 Get Started:
   Required: CMake version 3.10+
@@ -27,3 +27,4 @@ Options:
   
     -s|--start    = The entrence of the PDice
   
+    -i|--initial [file] = The initial order for the PDice
